@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const workoutRoutes = require('./routes/workouts');
+const userRoutes = require('./routes/user');
 
 // express app
 const app = express();
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 //     res.json({ mssg: 'welcome to the app' })
 // })
 app.use('/api/workouts', workoutRoutes);
+app.use('/api/user', userRoutes);
 
 // mongoose is an ODM(object data modelling). It wraps mongodb with an extra leyer which allows us to use methods to read and write DB documents and also gives us a way to create models and schemas to ensure more strict data structure
 mongoose.connect(process.env.MONGO_URI)
