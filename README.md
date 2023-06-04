@@ -9,4 +9,4 @@ To run the project in you system, follow below steps:
 
 
 #LIVE DEMO 
-- workoutbuddypro.netlify.app
+- workoutbuddypro.netlify.app(workoutbuddypro.netlify.app)
