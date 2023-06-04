@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const Workout = require('../models/workoutModel');
 const {
     createWorkout,
@@ -11,6 +12,8 @@ const requireAuth = require('../middleware/requireAuth');
 
 const router = express.Router();
 
+// enable cross-origin middleware
+router.use(cors());
 // fire the requireAuth() function before going to any of the routes
 // requireAuth for all workout routes
 router.use(requireAuth);
