@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useWorkoutContext } from "../hooks/useWorkoutsContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 // components
 import WorkoutDetails from "../components/WorkoutDetails"
@@ -8,23 +9,31 @@ import WorkoutForm from "../components/WorkoutForm"
 const Home = () => {
     // We don't need this 'useState as we will now use our custom hook 'useWorkoutContext'
     // const [workouts, setWorkouts] = useState(null);
-    const {workouts, dispatch} = useWorkoutContext();   // workouts is the initial value and dispath is the function which we will use to fetch data after its changed
+    const { workouts, dispatch } = useWorkoutContext();   // workouts is the initial value and dispath is the function which we will use to fetch data after its changed
+    const { user } = useAuthContext();
 
     // useEffect hook fire a function when the component is rendered
     // we only want to fire this function once when the component is rendered
     useEffect(() => {
         const fetchWorkouts = async () => {
-            const response = await fetch('/api/workouts');
+            const response = await fetch('/api/workouts', {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            });
             const json = await response.json();
 
             if (response.ok) {
                 // setWorkouts(json)   ---> no need of this as this will be done using hooks
-                dispatch({type: 'SET_WORKOUTS', payload: json})
+                dispatch({ type: 'SET_WORKOUTS', payload: json })
             }
         }
 
-        fetchWorkouts();
-    }, [dispatch]); //this is a dependency array which means that the function is fired once
+        // only fetch data if the user is available
+        if (user) {
+            fetchWorkouts();
+        }
+    }, [dispatch, user]); //this is a dependency array which means that the function is fired once
     return (
         <div className="home">
             <div className="workouts">
