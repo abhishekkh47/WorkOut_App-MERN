@@ -6,3 +6,6 @@ To run the project in you system, follow below steps:
 4. in the backend folder, go to the ".env" file and change the *MONGO_URI* environment variable with correct credentials
 5. start the node server using command - `npm run dev`
 6. start the react server using command - `npm run start`
+
+
+*LIVE DEMO* `workoutbuddypro.netlify.app`
