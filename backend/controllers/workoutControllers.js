@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 // get all workouts
 const getWorkouts = async (req, res) => {
     try {
-        const workouts = await Workout.find({}).sort({ createdAt: -1 });
+        const user_id = req.user.id;
+        const workouts = await Workout.find({ user_id }).sort({ createdAt: -1 });
         res.status(200).json(workouts);
     } catch (error) {
         res.status(400).json({ Error: error.message });
@@ -54,7 +55,9 @@ const createWorkout = async (req, res) => {
 
     // add doc to DB
     try {
-        const workout = await Workout.create({ title, load, reps });
+        // we will make use of the 'user' property which we added in the middleware 'requireAuth'
+        const user_id = req.user._id;
+        const workout = await Workout.create({ title, load, reps, user_id });
         res.status(200).json(workout);
     } catch (error) {
         console.log(`ERROR: ${error.message}`);
