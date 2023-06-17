@@ -12,6 +12,7 @@ const app = express();
 // mongoose is an ODM(object data modelling). It wraps mongodb with an extra leyer which allows us to use methods to read and write DB documents and also gives us a way to create models and schemas to ensure more strict data structure
 app.use(express.json());  // added this so that we can use the request data in the route and add it to DB
 
+// 'next' is used to propagate the data from 'req' object to other underlyting functions
 app.use((req, res, next) => {
     console.log(req.path, req.method);
     next();
